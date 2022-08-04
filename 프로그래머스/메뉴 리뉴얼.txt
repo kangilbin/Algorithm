@@ -1,0 +1,41 @@
+let map = new Map();
+const solution = (orders, course) => {
+
+    result = [];
+    orders.forEach(order => 
+            course.forEach(cnt => comb(map, order, cnt, [], 0))
+        );
+    
+    course.map(cnt => {
+        let max = 0;
+        map = [...map].filter(val => {
+            if(val[1] < 2) return false 
+           	   
+        	if(val[0].length === cnt) {
+                max = Math.max(max, val[1]);            
+                return !(val[1] < max);    
+            } else return true
+            
+        });
+        map = map.filter(val => {
+            if(val[0].length === cnt) return max > val[1] ? false : true
+            else return true 
+        });
+    });
+     map.map(val => {
+        result.push(val[0]);
+    });
+	return result.sort()
+};
+
+const comb = (map, order, cnt, deps, rpt) => {
+    if(deps.length === cnt) {
+        let strDeps = deps.sort().join('');
+
+        if(map.has(strDeps)) map.set(strDeps, map.get(strDeps) + 1);
+        else map.set(strDeps, 1);  
+    }
+   for(let i=rpt; i<order.length; i++) {
+        comb(map, order, cnt, [...deps, order[i]], i+1)
+   }
+}
