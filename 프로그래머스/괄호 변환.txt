@@ -1,0 +1,46 @@
+const solution = (p) => {
+    let answer = "";
+    let op = 0;
+    let cl = 0;
+    
+    if(!p) return '';
+    
+    for(let i=0; i < p.length; i++){  
+        
+        if(p[i] === "(") op++;
+        else cl++;
+
+        if(op === cl) {
+            if(check(p.slice(0, i+1))) { 
+                return p.slice(0, i+1) + solution(p.slice(i+1));
+            } else {
+				answer = '(' + solution(p.slice(i+1)) + ')';
+                
+                let format = p.slice(1, i);
+                for(let j=0; j < format.length; j++){
+                    if(format[j] === "(") answer += ")";
+                    else answer += "(";
+                }
+                
+                return answer;            
+            }
+          
+            
+        }
+    }
+     return answer;
+}
+const check = (p) => {
+    if(p[0] === ")") return false;
+    
+    let op = 0;
+    let cl = 0;
+    for (let i = 0; i<p.length; i++) {
+        if (p[i] === "(") op++;
+        else cl++;
+            
+        if(op < cl) return false;
+    }
+    if(op === cl) return true;
+    else return false;
+}
