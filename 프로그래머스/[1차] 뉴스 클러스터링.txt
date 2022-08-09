@@ -1,0 +1,41 @@
+function solution(str1, str2) {
+    const strArr1 = comb(str1.toUpperCase());
+    const strArr2 = comb(str2.toUpperCase());
+
+    let sum = strArr1.length + strArr2.length;
+    let intIn  = comparison(strArr1, strArr2);
+
+
+    let answer = Math.floor(intIn/(sum-intIn) * 65536);
+
+    return isNaN(answer) ? 65536 : answer;
+}
+
+const comb = (str) => {
+    let arr = [];
+    const regExp = /^[a-zA-Z]*$/; 
+
+    for(let i=0; i<str.length-1; i++) {
+        if(regExp.test(str[i]+str[i+1])){
+            arr.push(str[i] + str[i+1])
+        }
+    }
+    return arr
+}
+
+const comparison = (arr1, arr2) => {
+    let cnt = 0;
+
+    for(let i=0; i<arr1.length; i++) {
+        for(let j=0; j<arr2.length; j++) {
+            if(arr1[i] === arr2[j]) {
+                cnt++;
+
+                arr2.splice(j,1);
+                 break;
+            }
+
+        }
+    }
+    return cnt;
+}
