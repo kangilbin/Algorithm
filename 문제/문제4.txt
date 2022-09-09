@@ -1,0 +1,27 @@
+var answer = 0;
+function solution(arr, k, t)  {
+  
+    for(let i=0; i<arr.length; i++){
+        
+        comb(arr, i, k, t, 0, 1)
+    }
+    return answer;
+}
+const comb = (arr, i, k, t, num, cnt) => {
+    num += arr[i]
+    if(cnt >= k) { 
+        if(num <= t) {
+            answer++; 
+        } else {
+            return; 
+        }   
+    }
+    
+    for(let j=i+1; j<arr.length; j++){ 
+      comb(arr, j, k, t, num, cnt+1);
+    }
+}
+
+
+debugger
+solution([2,5,3,8,1],3,11)
